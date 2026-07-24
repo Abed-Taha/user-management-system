@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../env/env';
 import { FormGroup } from '@angular/forms';
+import { PaginatedResponse } from '../paginated-table/paginated-table';
 
 export interface User {
   id: number,
@@ -29,8 +30,8 @@ export class UserService {
   return response;
 
 }
-getUsers(query:string): Observable<object>{
-  return this.http.get(`${environment.apiUrl}/user/find/all?${query}`);
+getUsers(query:string): Observable<PaginatedResponse<User>>{
+  return this.http.get<PaginatedResponse<User>>(`${environment.apiUrl}/user/find/all?${query}`);
 }
 
 login(form: any): Observable<User | null>{

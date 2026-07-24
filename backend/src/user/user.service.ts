@@ -3,7 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { FilterOperator, FilterSuffix, paginate, PaginateConfig, Paginated, PaginateQuery } from 'nestjs-paginate';
+import {
+  FilterOperator,
+  FilterSuffix,
+  paginate,
+  PaginateConfig,
+  Paginated,
+  PaginateQuery,
+} from 'nestjs-paginate';
 import { UpdateUser } from 'src/dto/update-user.dto';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { LoginUserDto } from 'src/dto/login-user.dto';
@@ -38,7 +45,7 @@ export class UserService {
         deletedAt: [FilterOperator.NULL, FilterSuffix.NOT],
       },
       withDeleted: true,
-      maxLimit: 30,
+      maxLimit: 10,
     };
     return paginate(query, this.userRepository, config);
   }
