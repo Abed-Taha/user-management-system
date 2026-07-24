@@ -9,5 +9,7 @@ import { ToastModule } from 'primeng/toast';
   styleUrl: './app.css'
 })
 export class App {
+
+
   protected readonly title = signal('frontend');
 }

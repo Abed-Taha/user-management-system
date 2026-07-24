@@ -1,9 +1,20 @@
-import { Body, Controller, Post, Get, Param, ParseIntPipe, Put, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Param,
+  ParseIntPipe,
+  Put,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { Paginate } from 'nestjs-paginate';
 import type { PaginateQuery } from 'nestjs-paginate';
 import { UpdateUser } from 'src/dto/update-user.dto';
+import { LoginUserDto } from 'src/dto/login-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -19,6 +30,13 @@ export class UserController {
   async getUser(@Param('id', ParseIntPipe) id: number) {
     const user = await this.userService.findOne(id);
     return user;
+  }
+
+  @Post('login')
+  async login(@Body() userInfo: LoginUserDto) {
+    const user = await this.userService.findByEmail(userInfo);
+    if (user) return { data: user, message: 'Logged In successfully' };
+    else throw new NotFoundException({ message: 'email or password is Incorrect' });
   }
 
   @Get('find/all')

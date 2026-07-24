@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 export const msgType = {
   ERROR: "error",
   SUCCESS: 'success',
-  WARN: 'warn'
+  WARN: 'warn',
 };
 
 @Injectable({
