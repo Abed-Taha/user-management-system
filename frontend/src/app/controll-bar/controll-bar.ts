@@ -1,0 +1,88 @@
+import { Component, inject } from '@angular/core';
+import { PanelModule } from 'primeng/panel';
+import { FloatLabel } from "primeng/floatlabel";
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { CommonModule } from '@angular/common';
+import { Button } from "primeng/button";
+import { UserService } from '../services/user-service';
+
+@Component({
+  selector: 'app-controll-bar',
+  imports: [PanelModule, FloatLabel, InputTextModule, SelectButtonModule, CommonModule, Button],
+  templateUrl: './controll-bar.html',
+  styleUrl: './controll-bar.css',
+})
+export class ControllBar {
+  private userService = inject(UserService);
+  protected sortDirection ='ASC';
+
+  searchForm = {
+    status: '$null',
+    orderBy: 'ASC',
+    search: '',
+    sortBy: 'createdAt'
+  }
+
+  userStateOptions: any[]= [
+    {label : 'Disabled' , value : '$not:$null'},
+    {label : 'Active' , value: '$null'},
+  ]
+
+
+
+toggleSort() {
+  this.sortDirection = this.sortDirection === 'ASC' ? 'DESC' : 'ASC';
+}
+
+fetch() {
+
+  const params = new URLSearchParams();
+
+  if (this.searchForm.search.trim()) {
+    params.append('search', this.searchForm.search.trim());
+  }
+
+  params.append(
+    'filter.deletedAt',
+    this.searchForm.status
+  );
+
+  params.append(
+    'sortBy',
+    `${this.searchForm.sortBy}:${this.searchForm.orderBy}`
+  );
+
+  this.userService.getUsers(params.toString()).subscribe({
+    next: (response) => {
+      console.log(response);
+    },
+    error: (err) => {
+      console.error(err);
+    }
+  });
+}
+
+handleSearch(e:any){
+  this.searchForm.search = e.target.value;
+  console.log( this.searchForm.search);
+  this.fetch();
+}
+
+handleToggleStatus(e:any) {
+  console.log(e.value);
+  this.searchForm.status = e.value;
+  this.fetch();
+}
+
+handleToggleSort() {
+  this.searchForm.orderBy =
+    this.searchForm.orderBy === 'ASC' ? 'DESC' : 'ASC';
+
+  this.sortDirection = this.searchForm.orderBy ;
+  this.fetch();
+}
+
+
+
+}

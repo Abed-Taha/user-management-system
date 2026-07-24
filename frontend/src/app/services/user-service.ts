@@ -29,8 +29,8 @@ export class UserService {
   return response;
 
 }
-getUsers(): Observable<object>{
-  return this.http.get(`${environment.apiUrl}/user/find/all?page=1&limit=10`);
+getUsers(query:string): Observable<object>{
+  return this.http.get(`${environment.apiUrl}/user/find/all?${query}`);
 }
 
 login(form: any): Observable<User | null>{
