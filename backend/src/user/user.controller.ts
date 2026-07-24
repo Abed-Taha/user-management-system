@@ -29,7 +29,8 @@ export class UserController {
   @Get(':id')
   async getUser(@Param('id', ParseIntPipe) id: number) {
     const user = await this.userService.findOne(id);
-    return user;
+    if (!user) throw new NotFoundException({ message: 'User Not Found!' });
+    else return user;
   }
 
   @Post('login')
