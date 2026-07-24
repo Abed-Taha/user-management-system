@@ -6,7 +6,9 @@ import * as bcrypt from 'bcrypt';
 import { paginate, PaginateConfig, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { UpdateUser } from 'src/dto/update-user.dto';
 import { CreateUserDto } from 'src/dto/create-user.dto';
+import { LoginUserDto } from 'src/dto/login-user.dto';
 
+const BCRYPT = 10;
 @Injectable()
 export class UserService {
   constructor(
@@ -15,7 +17,7 @@ export class UserService {
   ) {}
 
   async create(user: CreateUserDto): Promise<User> {
-    const hashed = await bcrypt.hash(user.password, 10);
+    const hashed = await bcrypt.hash(user.password, BCRYPT);
     const newUser = this.userRepository.create({ ...user, password: hashed });
     return await this.userRepository.save(newUser);
   }
@@ -56,5 +58,14 @@ export class UserService {
     const status = await this.userRepository.softDelete(id);
     const affected = status.affected ?? 0;
     return affected > 0;
+  }
+
+  async findByEmail(userdto: LoginUserDto): Promise<User | null> {
+    const user = await this.userRepository.findOne({
+      where: { email: userdto.email },
+    });
+    if (!user) return null;
+    const match = await bcrypt.compare(userdto.password, user.password);
+    return match ? user : null;
   }
 }

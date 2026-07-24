@@ -1,7 +1,25 @@
 <app-center-container>
-  <p-card header="Login Form">
-    <p class="m-0">
-      Lorem ipsum dolor sit amet...
-    </p>
+  <p-card header="Login" class="login-card">
+    <form class="p-fluid" (ngSubmit)="login()" [formGroup]="loginForm">
+      <div class="field">
+        <p-floatlabel variant="on">
+          <input id="email" type="email" pInputText formControlName="email" [invalid]="email?.invalid && email?.touched" required />
+          <label for="email">Email</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="field">
+        <p-floatlabel variant="on">
+          <input id="password" type="password" pPassword  formControlName="password"[invalid]="password?.invalid && password.touched" feedback="false"
+            required />
+          <label for="password">Password</label>
+        </p-floatlabel>
+      </div>
+
+      <button pButton type="submit" label="Login" class="submit-button"></button>
+    </form>
+    <div style="margin: 0 auto; width: max-content;">
+      <p-button label="Don't have account? Register." [link]="true" [routerLink]="'/register'" class="text-center " />
+    </div>
   </p-card>
 </app-center-container>
