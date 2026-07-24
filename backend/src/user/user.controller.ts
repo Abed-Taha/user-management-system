@@ -42,7 +42,7 @@ export class UserController {
 
   @Get('find/all')
   async getAll(@Paginate() query: PaginateQuery) {
-    console.log('user here');
+    console.log(query);
     const users = await this.userService.findAll(query);
     return users;
   }

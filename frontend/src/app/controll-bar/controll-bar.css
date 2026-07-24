@@ -1,0 +1,43 @@
+h1 {
+  text-align: center;
+  color: #ddd;
+}
+
+p-panel {
+  width: 90% !important;
+  margin: 0 auto;
+  padding:10px 20px;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+#p-panel {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+#on_label {
+  max-width : 800px !important;
+  width: 100%;
+}
+
+#p-panel-right {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+
+.icon {
+  font-weight: bold !important;
+}
+
+@media  screen and (max-width: 750px) {
+  #p-panel {
+    flex-direction: column;
+    gap: 20px;
+
+  }
+}

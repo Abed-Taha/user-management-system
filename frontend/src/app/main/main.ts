@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { ControllBar } from "../controll-bar/controll-bar";
 
 @Component({
   selector: 'app-main',
-  imports: [],
+  imports: [ControllBar],
   templateUrl: './main.html',
   styleUrl: './main.css',
 })
