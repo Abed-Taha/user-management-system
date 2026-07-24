@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { paginate, PaginateConfig, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { UpdateUser } from 'src/dto/update-user.dto';
+import { CreateUserDto } from 'src/dto/create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -13,7 +14,7 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async create(user: User): Promise<User> {
+  async create(user: CreateUserDto): Promise<User> {
     const hashed = await bcrypt.hash(user.password, 10);
     const newUser = this.userRepository.create({ ...user, password: hashed });
     return await this.userRepository.save(newUser);

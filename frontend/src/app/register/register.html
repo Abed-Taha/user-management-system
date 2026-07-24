@@ -1,0 +1,32 @@
+<app-center-container>
+  <p-card header="Register" class="register-card">
+    <form class="p-fluid" (ngSubmit)="register()" [formGroup]="registerForm">
+      <div class="field">
+        <p-floatlabel variant="in">
+          <input id="fullName" type="text" pInputText formControlName="fullName" required  [invalid]="fullName?.invalid && fullName?.touched"/>
+          <label for="fullName">Full Name</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="field">
+        <p-floatlabel variant="in">
+          <input id="email" type="email" pInputText formControlName="email" required [invalid]="email?.invalid && email?.touched"/>
+          <label for="email">Email</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="field">
+        <p-floatlabel variant="in">
+          <input id="password" type="password" pPassword formControlName="password" feedback="false" required [invalid]="password?.invalid && password?.touched"/>
+          <label for="password">Password</label>
+        </p-floatlabel>
+      </div>
+
+      <button pButton type="submit" label="Register" class="submit-button"></button>
+    </form>
+    <div style="margin: 0 auto; width: max-content;">
+      <p-button label="Has an account To Login?" [link]="true" [routerLink]="'/login'" class="text-center " />
+    </div>
+  </p-card>
+
+</app-center-container>
