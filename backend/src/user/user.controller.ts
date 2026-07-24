@@ -4,7 +4,6 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { Paginate } from 'nestjs-paginate';
 import type { PaginateQuery } from 'nestjs-paginate';
 import { UpdateUser } from 'src/dto/update-user.dto';
-import { User } from 'src/entities/user.entity';
 
 @Controller('user')
 export class UserController {
@@ -12,7 +11,7 @@ export class UserController {
 
   @Post('create')
   async create(@Body() user: CreateUserDto) {
-    const created = await this.userService.create(user as User);
+    const created = await this.userService.create(user);
     return { message: 'User created successfully', id: created.id };
   }
 
@@ -24,6 +23,7 @@ export class UserController {
 
   @Get('find/all')
   async getAll(@Paginate() query: PaginateQuery) {
+    console.log('user here');
     const users = await this.userService.findAll(query);
     return users;
   }

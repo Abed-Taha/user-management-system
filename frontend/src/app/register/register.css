@@ -1,0 +1,27 @@
+.register-card {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.field {
+  margin-bottom: 1.3rem;
+
+}
+
+.register-card .p-inputtext,
+.register-card .p-password input {
+  background-color: rgb(227, 227, 227);
+  border-color: #ced4da;
+  color: #333;
+  width: 100%;
+}
+
+.register-card .p-inputtext:focus,
+.register-card .p-password input:focus {
+  border-color: #5b9bd5;
+  box-shadow: 0 0 0 0.15rem rgba(91, 155, 213, 0.25);
+}
+
+.submit-button {
+  width: 100%;
+}

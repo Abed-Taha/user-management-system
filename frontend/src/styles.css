@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+:root {
+ --light-blue:#2F2FE4;
+ --medium-blue: #162E93;
+  --dark-blue:#1A1953;
+ --black:#080616;
+
+ --white:#eee;
+}
+
+body {
+  margin: 0;
+  background-color: var(--medium-blue);
+}
+
+*{
+  box-sizing: border-box;
+  font-family:  sans-serif;
+}
+
+.card-container {
+  width: 80%;
+  background-color: var(--dark-blue) !important;
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+.w-100 {
+  width: 100% !important;
+}
+
+.d-block {
+  display: block;
+}
