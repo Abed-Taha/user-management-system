@@ -12,6 +12,7 @@
 body {
   margin: 0;
   background-color: var(--medium-blue);
+  margin-top: 40px;
 }
 
 *{

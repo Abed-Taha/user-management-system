@@ -1,1 +1,19 @@
-<p>header works!</p>
+<header class="header">
+  <div>
+    @if(user$ | async; as user){
+      Hello {{user.fullName}}
+    }
+  </div>
+
+  <nav>
+    @if(!isUser()) {
+            <button type="button" pButton link [routerLink]="'/register'">Register</button>
+
+            <button type="button" pButton link [routerLink]="'/login'">Login</button>
+
+    }@else {
+            <button pButton variant="text" severity="danger" (click)="logout()">Logout</button>
+
+    }
+  </nav>
+</header>

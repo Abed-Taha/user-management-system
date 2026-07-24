@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../env/env';
 import { FormGroup } from '@angular/forms';
 
-interface User {
+export interface User {
   id: number,
   fullName: string,
   email: string,
