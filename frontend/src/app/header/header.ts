@@ -16,10 +16,8 @@ export class Header {
   private authService = inject(AuthService);
   private router = inject(Router);
 
- user$?: Observable<User | null> ;
- ngOnInit(){
-  this.user$ = this.authService.getCurrentUser();
- }
+ user$?: Observable<User | null> = this.authService.getCurrentUser() ;
+
 
   isUser(): boolean {
     return this.authService.IsLoggedIn();
@@ -27,7 +25,6 @@ export class Header {
 
   logout() {
     sessionStorage.removeItem('user');
-    this.ngOnInit();
     this.router.navigate(['/login']);
   }
 }

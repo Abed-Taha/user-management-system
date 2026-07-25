@@ -17,7 +17,7 @@ export class AlertService {
 
 
 
-showToast( type:string, message:string , title:string ){
+showToast( type:string, message:string , title:string = 'Error' ){
   this.msgService.add({
     severity: type,
     summary: title,

@@ -1,0 +1,4 @@
+.table-body:hover {
+  background-color: rgb(224, 222, 222);
+  transition: .2s;
+}

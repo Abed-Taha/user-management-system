@@ -1,1 +1,4 @@
-<app-controll-bar />
+<app-controll-bar (paginatedUser)="handleUsers($event)" />
+<p-panel [header]="" style="margin-top: 20px;">
+  <app-paginated-table [users]="users" (pageChanged)="paginatedChanged($event)"/>
+</p-panel>

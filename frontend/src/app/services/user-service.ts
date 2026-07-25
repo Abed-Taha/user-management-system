@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../env/env';
 import { FormGroup } from '@angular/forms';
+import { PaginatedResponse } from '../paginated-table/paginated-table';
 
 export interface User {
   id: number,
@@ -29,14 +30,31 @@ export class UserService {
   return response;
 
 }
-getUsers(query:string): Observable<object>{
-  return this.http.get(`${environment.apiUrl}/user/find/all?${query}`);
+getUsers(query:string): Observable<PaginatedResponse<User>>{
+  const userId = sessionStorage.getItem('user') ?? 0
+  return this.http.get<PaginatedResponse<User>>(`${environment.apiUrl}/user/find/all` ,{
+      params: {
+        ...Object.fromEntries(new URLSearchParams(query)),
+        userId: userId 
+      }})
 }
 
 login(form: any): Observable<User | null>{
   return this.http.post<User>(`${environment.apiUrl}/user/login`,
     { email: form.email , password: form.password}
   );
+}
+
+disableUser(id : number) {
+  return this.http.put(`${environment.apiUrl}/user/${id}/disable` , {});
+}
+
+restoreUser(id: number){
+  return this.http.put(`${environment.apiUrl}/user/${id}/restore`, {})
+}
+
+deleteUser(id: number){
+  return this.http.delete(`${environment.apiUrl}/user/${id}/delete`);
 }
 
 

@@ -1,11 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { PanelModule } from 'primeng/panel';
 import { FloatLabel } from "primeng/floatlabel";
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CommonModule } from '@angular/common';
 import { Button } from "primeng/button";
-import { UserService } from '../services/user-service';
+import { User, UserService } from '../services/user-service';
+import { AlertService, msgType } from '../services/alert-service';
+import { PaginatedResponse } from '../paginated-table/paginated-table';
 
 @Component({
   selector: 'app-controll-bar',
@@ -13,9 +15,11 @@ import { UserService } from '../services/user-service';
   templateUrl: './controll-bar.html',
   styleUrl: './controll-bar.css',
 })
-export class ControllBar {
+export class ControllBar implements OnInit{
   private userService = inject(UserService);
+  private alertService = inject(AlertService)
   protected sortDirection ='ASC';
+  @Output() paginatedUser = new EventEmitter<PaginatedResponse<User>>();
 
   searchForm = {
     status: '$null',
@@ -29,6 +33,13 @@ export class ControllBar {
     {label : 'Active' , value: '$null'},
   ]
 
+    ngOnInit(): void {
+    this.userService.getUsers("").subscribe({
+      next: res => {
+        this.paginatedUser.emit(res) ;
+      }
+    })
+  }
 
 
 toggleSort() {
@@ -55,22 +66,20 @@ fetch() {
 
   this.userService.getUsers(params.toString()).subscribe({
     next: (response) => {
-      console.log(response);
+      this.paginatedUser.emit(response);
     },
     error: (err) => {
-      console.error(err);
+      this.alertService.showToast(msgType.ERROR , 'Error while fetching Data' , 'Error')
     }
   });
 }
 
 handleSearch(e:any){
   this.searchForm.search = e.target.value;
-  console.log( this.searchForm.search);
   this.fetch();
 }
 
 handleToggleStatus(e:any) {
-  console.log(e.value);
   this.searchForm.status = e.value;
   this.fetch();
 }

@@ -3,7 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { FilterOperator, FilterSuffix, paginate, PaginateConfig, Paginated, PaginateQuery } from 'nestjs-paginate';
+import {
+  FilterOperator,
+  FilterSuffix,
+  paginate,
+  PaginateConfig,
+  Paginated,
+  PaginateQuery,
+} from 'nestjs-paginate';
 import { UpdateUser } from 'src/dto/update-user.dto';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { LoginUserDto } from 'src/dto/login-user.dto';
@@ -29,7 +36,7 @@ export class UserService {
     return user;
   }
 
-  async findAll(query: PaginateQuery): Promise<Paginated<User | null>> {
+  async findAll(query: PaginateQuery, userId: number): Promise<Paginated<User | null>> {
     const config: PaginateConfig<User> = {
       sortableColumns: ['id', 'fullName', 'email', 'createdAt'],
       searchableColumns: ['fullName', 'email'],
@@ -38,9 +45,14 @@ export class UserService {
         deletedAt: [FilterOperator.NULL, FilterSuffix.NOT],
       },
       withDeleted: true,
-      maxLimit: 30,
+      maxLimit: 10,
     };
-    return paginate(query, this.userRepository, config);
+
+    const queryBuilder = this.userRepository
+      .createQueryBuilder('user')
+      .where('user.id != :userId', { userId });
+
+    return paginate(query, queryBuilder, config);
   }
 
   async update(id: number, user: UpdateUser): Promise<User | null> {
@@ -68,5 +80,15 @@ export class UserService {
     if (!user) return null;
     const match = await bcrypt.compare(userdto.password, user.password);
     return match ? user : null;
+  }
+
+  async disableUser(id: number): Promise<number> {
+    const res = await this.userRepository.softDelete(id);
+    return res.affected ?? 0;
+  }
+
+  async restoreUser(id: number): Promise<number> {
+    const res = await this.userRepository.restore(id);
+    return res.affected ?? 0;
   }
 }

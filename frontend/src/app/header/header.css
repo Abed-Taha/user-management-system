@@ -12,6 +12,7 @@
   transform: translateX(-50%);
   align-items: center;
   top:10px;
+  z-index: 999;
 }
 
 nav {
