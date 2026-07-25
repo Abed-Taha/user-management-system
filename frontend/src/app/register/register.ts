@@ -24,7 +24,6 @@ import { AlertService, msgType } from '../services/alert-service';
     FormsModule,
     RouterLink,
     ReactiveFormsModule,
-    NgClass
 ],
   templateUrl: './register.html',
   styleUrl: './register.css',
