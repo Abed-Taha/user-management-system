@@ -43,7 +43,6 @@ export class SeedService {
     }
 
     SeedService.usersCount = end;
-    console.log(SeedService.usersCount);
   }
 
   get usersCount() {
