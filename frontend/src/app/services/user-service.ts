@@ -31,7 +31,12 @@ export class UserService {
 
 }
 getUsers(query:string): Observable<PaginatedResponse<User>>{
-  return this.http.get<PaginatedResponse<User>>(`${environment.apiUrl}/user/find/all?${query}`);
+  const userId = sessionStorage.getItem('user') ?? 0
+  return this.http.get<PaginatedResponse<User>>(`${environment.apiUrl}/user/find/all` ,{
+      params: {
+        ...Object.fromEntries(new URLSearchParams(query)),
+        userId: userId 
+      }})
 }
 
 login(form: any): Observable<User | null>{

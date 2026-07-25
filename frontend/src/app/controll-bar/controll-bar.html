@@ -2,19 +2,17 @@
 
 <p-panel [showHeader]="false">
   <div id="p-panel">
-    <p-floatlabel variant="on">
+    <p-floatlabel variant="on" style="width:100%;">
       <input pInputText id="on_label" autocomplete="off" (input)="handleSearch($event)"/>
       <label for="on_label">Search</label>
     </p-floatlabel>
     <div>
       <div id="p-panel-right">
         <p-selectbutton [options]="userStateOptions" optionLabel="label" optionValue="value" fluid (onChange)="handleToggleStatus($event)"/>
-        <p-button class="icon" [icon]="sortDirection === 'ASC' ? 'pi pi-chevron-up' : 'pi pi-chevron-down'" (onClick)="handleToggleSort()"
-          [text]="true" outlined>
+        <p-button class="icon" [icon]="sortDirection === 'ASC' ? 'pi pi-chevron-up' : 'pi pi-chevron-down'" (onClick)="handleToggleSort()">
         </p-button>
       </div>
 
     </div>
   </div>
-
 </p-panel>

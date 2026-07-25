@@ -15,8 +15,8 @@ p-panel {
 
 #p-panel {
   display: flex;
-  width: 100%;
   justify-content: space-between;
+  gap: 20px;
 }
 #on_label {
   max-width : 800px !important;

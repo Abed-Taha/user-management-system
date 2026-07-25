@@ -1,18 +1,18 @@
 <header class="header">
   <div>
     @if(user$ | async; as user){
-      Hello {{user.fullName}}
+    Hello <u>{{user.fullName}}</u>
     }
   </div>
 
   <nav>
     @if(!isUser()) {
-            <button type="button" pButton link [routerLink]="'/register'">Register</button>
+    <button type="button" pButton link [routerLink]="'/register'">Register</button>
 
-            <button type="button" pButton link [routerLink]="'/login'">Login</button>
+    <button type="button" pButton link [routerLink]="'/login'">Login</button>
 
     }@else {
-            <button pButton variant="text" severity="danger" (click)="logout()">Logout</button>
+    <button pButton variant="text" severity="danger" (click)="logout()">Logout</button>
 
     }
   </nav>

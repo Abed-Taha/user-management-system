@@ -36,7 +36,7 @@ export class UserService {
     return user;
   }
 
-  async findAll(query: PaginateQuery): Promise<Paginated<User | null>> {
+  async findAll(query: PaginateQuery, userId: number): Promise<Paginated<User | null>> {
     const config: PaginateConfig<User> = {
       sortableColumns: ['id', 'fullName', 'email', 'createdAt'],
       searchableColumns: ['fullName', 'email'],
@@ -47,7 +47,12 @@ export class UserService {
       withDeleted: true,
       maxLimit: 10,
     };
-    return paginate(query, this.userRepository, config);
+
+    const queryBuilder = this.userRepository
+      .createQueryBuilder('user')
+      .where('user.id != :userId', { userId });
+
+    return paginate(query, queryBuilder, config);
   }
 
   async update(id: number, user: UpdateUser): Promise<User | null> {

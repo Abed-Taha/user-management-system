@@ -9,6 +9,7 @@ import {
   Delete,
   NotFoundException,
   InternalServerErrorException,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from '../dto/create-user.dto';
@@ -43,9 +44,9 @@ export class UserController {
   }
 
   @Get('find/all')
-  async getAll(@Paginate() query: PaginateQuery) {
-    console.log(query);
-    const users = await this.userService.findAll(query);
+  async getAll(@Paginate() query: PaginateQuery, @Query('userId') userId: number) {
+    console.log(userId);
+    const users = await this.userService.findAll(query, userId);
     return users;
   }
 

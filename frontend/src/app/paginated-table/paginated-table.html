@@ -1,48 +1,47 @@
+<p-table [value]="users?.data" [lazy]="true" [paginator]="true" [rows]="rows" [first]="first"
+  [totalRecords]="users?.meta?.totalItems" [tableStyle]="{ minWidth: '50rem' }" (onLazyLoad)="changePage($event)">
+  <ng-template #header>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Join At</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-user>
+    <tr class="table-body">
+      <td>{{user.fullName}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.createdAt | date:'short'}}</td>
+      <td> <p-tag [value]="user.deletedAt ? 'Disabled' : 'Active'" [severity]="user.deletedAt ? 'danger' : 'success'">
+        </p-tag></td>
+      <td style="display: flex;gap:5px;">
+        @if (!user.deletedAt) {
+        <!-- Active user -->
+        <p-button icon="pi pi-ban" label="Disable" severity="warn" size="small" (onClick)="disableUser(user.id)">
+        </p-button>
 
-<p-table
-  [value]="users?.data ?? []"
-  [lazy]="true"
-  [paginator]="true"
-  [rows]="rows"
-  [first]="first"
-  [totalRecords]="users?.meta?.totalItems ?? 0"
-  [tableStyle]="{ minWidth: '50rem' }"
-  (onLazyLoad)="changePage($event)">
-<ng-template #header>
-  <tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Join At</th>
-    <th>Status</th>
-    <th>Actions</th>
-  </tr>
-</ng-template>
-<ng-template #body let-user>
-  <tr class="table-body">
-    <td>{{user.fullName}}</td>
-    <td>{{user.email}}</td>
-    <td>{{user.createdAt | date:'short'}}</td>
-    <td> <p-tag [value]="user.deletedAt ? 'Disabled' : 'Active'" [severity]="user.deletedAt ? 'danger' : 'success'">
-      </p-tag></td>
-    <td style="display: flex;gap:5px;">
-      @if (!user.deletedAt) {
-      <!-- Active user -->
-      <p-button icon="pi pi-ban" label="Disable" severity="warn" size="small" (onClick)="disableUser(user.id)">
-      </p-button>
+        <p-button icon="pi pi-trash" label="Delete" severity="danger" size="small" (onClick)="deleteUser(user.id)">
+        </p-button>
+        }
+        @else {
+        <!-- Disabled user -->
+        <p-button icon="pi pi-refresh" label="Restore" severity="success" size="small" (onClick)="restoreUser(user.id)">
+        </p-button>
 
-      <p-button icon="pi pi-trash" label="Delete" severity="danger" size="small" (onClick)="deleteUser(user.id)">
-      </p-button>
-      }
-      @else {
-      <!-- Disabled user -->
-      <p-button icon="pi pi-refresh" label="Restore" severity="success" size="small" (onClick)="restoreUser(user.id)">
-      </p-button>
+        <p-button icon="pi pi-trash" label="Delete" severity="danger" size="small" (onClick)="deleteUser(user.id)">
+        </p-button>
+        }
+      </td>
+    </tr>
 
-      <p-button icon="pi pi-trash" label="Delete" severity="danger" size="small" (onClick)="deleteUser(user.id)">
-      </p-button>
-      }
-    </td>
-  </tr>
-
-</ng-template>
+  </ng-template>
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="5" class="text-center">
+        <h2>No User Found</h2>
+      </td>
+    </tr>
+  </ng-template>
 </p-table>

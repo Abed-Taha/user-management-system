@@ -14,6 +14,7 @@ export class Main {
 
   users!: PaginatedResponse<User> ;
   private userService = inject(UserService);
+  private cdr = inject(ChangeDetectorRef)
 
   handleUsers(value:any){
     this.users = value;
@@ -22,8 +23,9 @@ export class Main {
   paginatedChanged(event: string){
     this.userService.getUsers(event).subscribe({
       next: res => {
-        
+
         this.users = res
+        this.cdr.detectChanges();
       },
       error: err =>console.error(err)
     })

@@ -101,7 +101,7 @@ changePage(event: TableLazyLoadEvent) {
   });
 
   this.pageChanged.emit(query.toString());
-} // should fix the error double click :)
+} 
 }
 
 
