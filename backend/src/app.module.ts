@@ -6,6 +6,7 @@ import { DataSource } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { User } from './entities/user.entity';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { User } from './entities/user.entity';
       inject: [ConfigService],
     }),
     UserModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
