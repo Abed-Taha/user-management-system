@@ -18,26 +18,32 @@ export class SeedService {
     const users: Partial<User>[] = [];
 
     const start = SeedService.usersCount + 1;
-    const end = SeedService.usersCount + 10;
+    const end = SeedService.usersCount + 30;
 
-    const userExist = await this.userRepository.findOne({
-      where: {
-        id: start,
-      },
-    });
-    if (!userExist) {
-      for (let i = start; i <= end; i++) {
+    for (let i = start; i <= end; i++) {
+      const email = `User${i}@test.com`;
+
+      const userExist = await this.userRepository.findOne({
+        where: {
+          email,
+        },
+      });
+
+      if (!userExist) {
         users.push({
           fullName: `User ${i}`,
-          email: `User${i}@test.com`,
+          email,
           password: hashedPass,
         });
       }
+    }
 
+    if (users.length > 0) {
       await this.userRepository.save(users);
     }
 
     SeedService.usersCount = end;
+    console.log(SeedService.usersCount);
   }
 
   get usersCount() {
