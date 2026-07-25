@@ -7,7 +7,7 @@ This project uses Docker only for the database. The frontend and backend run loc
 ## 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Abed-Taha/user-management-system.git
 cd user-management-system
 ```
 
