@@ -36,7 +36,6 @@ export class ControllBar implements OnInit{
     ngOnInit(): void {
     this.userService.getUsers("").subscribe({
       next: res => {
-        console.log(res);
         this.paginatedUser.emit(res) ;
       }
     })

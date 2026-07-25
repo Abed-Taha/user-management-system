@@ -30,26 +30,63 @@ export interface PaginatedResponse<T> {
 export class PaginatedTable  {
 @Input() users!: PaginatedResponse<User> ;
 @Output() pageChanged = new EventEmitter<string>()
-  private cdr = inject(ChangeDetectorRef)
-  private userSer= inject(UserService);
+  private userService= inject(UserService);
+  private alertService = inject(AlertService)
 
   rows: number = 10
   first: number = 0
 
 
   disableUser(id: number) {
-  console.log('Disable user:', id);
-  // call API
+    this.userService.disableUser(id).subscribe({
+      next: (res : any) => {
+         const query = new URLSearchParams({
+          page: this.first.toString(),
+          limit: this.rows.toString()
+  });
+        this.pageChanged.emit(query.toString())
+          this.alertService.showToast(msgType.SUCCESS , res.message , 'Disabled')
+
+      },
+      error: (err :any) => {
+
+        this.alertService.showToast(msgType.ERROR , err.message);
+      }
+    })
 }
 
 restoreUser(id: number) {
-  console.log('Restore user:', id);
-  // call API
+ this.userService.restoreUser(id).subscribe({
+      next: (res : any) => {
+         const query = new URLSearchParams({
+          page: this.first.toString(),
+          limit: this.rows.toString()
+  });
+        this.pageChanged.emit(query.toString())
+          this.alertService.showToast(msgType.SUCCESS , res.message , 'Restored')
+
+      },
+      error: (err :any) => {
+        this.alertService.showToast(msgType.ERROR , err.message);
+      }
+    })
 }
 
 deleteUser(id: number) {
-  console.log('Delete user:', id);
-  // call API
+   this.userService.deleteUser(id).subscribe({
+      next: (res : any) => {
+         const query = new URLSearchParams({
+          page: this.first.toString(),
+          limit: this.rows.toString()
+  });
+        this.pageChanged.emit(query.toString())
+          this.alertService.showToast(msgType.SUCCESS , res.message , 'Deleted!')
+
+      },
+      error: (err :any) => {
+        this.alertService.showToast(msgType.ERROR , err.message);
+      }
+    })
 }
 changePage(event: TableLazyLoadEvent) {
 
@@ -64,7 +101,7 @@ changePage(event: TableLazyLoadEvent) {
   });
 
   this.pageChanged.emit(query.toString());
-}
+} // should fix the error double click :)
 }
 
 

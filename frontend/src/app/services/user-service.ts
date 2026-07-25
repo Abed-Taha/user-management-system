@@ -40,5 +40,17 @@ login(form: any): Observable<User | null>{
   );
 }
 
+disableUser(id : number) {
+  return this.http.put(`${environment.apiUrl}/user/${id}/disable` , {});
+}
+
+restoreUser(id: number){
+  return this.http.put(`${environment.apiUrl}/user/${id}/restore`, {})
+}
+
+deleteUser(id: number){
+  return this.http.delete(`${environment.apiUrl}/user/${id}/delete`);
+}
+
 
 }

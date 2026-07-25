@@ -76,4 +76,14 @@ export class UserService {
     const match = await bcrypt.compare(userdto.password, user.password);
     return match ? user : null;
   }
+
+  async disableUser(id: number): Promise<number> {
+    const res = await this.userRepository.softDelete(id);
+    return res.affected ?? 0;
+  }
+
+  async restoreUser(id: number): Promise<number> {
+    const res = await this.userRepository.restore(id);
+    return res.affected ?? 0;
+  }
 }
